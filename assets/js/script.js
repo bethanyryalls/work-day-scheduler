@@ -43,7 +43,7 @@ $.each(hours, function (index, value) {
     // create row div with class row
     var row = $('<div>').addClass('row');
     // create div to hold the time with span that holds the hour and AM/PM
-    var timeCol = $('<div>').addClass('hour col-1 text-right pt-3 pr-1').append('<span>' + value.format('hA') + '</span>');
+    var timeCol = $('<div>').addClass('hour col-1 text-right pt-3').append('<span>' + value.format('hA') + '</span>');
     // create text area for event column
     // include event item from local storage if there, add id of eventblock and number (hour)
     var textArea = $('<textarea>' + events[index] + '</textarea>').attr('id', 'eventblock' + (index + 9)).addClass('col-12');
@@ -135,7 +135,7 @@ var clearBtn = $('<button>').text('Clear Events').addClass('clearBtn btn btn-sec
 $('.container').append(clearBtn);
 
 // Add click event listener to button
-$('.clearBtn').on('click', function() {
+$('.clearBtn').on('click', function () {
     //clear input fields
     $('textarea').val('');
     // Clear local storage
