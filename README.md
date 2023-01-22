@@ -40,7 +40,7 @@ You will be directed to the webpage where you can click on a timeblock and enter
 ## Resources
 - [Stack Overflow](https://stackoverflow.com)
 - [Moment.js Docs](https://momentjs.com/docs/)
-- [jQuery Docs] (https://api.jquery.com/)
+- [jQuery Docs](https://api.jquery.com/)
 
 ## License
 
