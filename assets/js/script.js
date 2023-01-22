@@ -21,15 +21,15 @@ var fivePm = moment().hour(17);
 var hours = [nineAm, tenAm, elevenAm, twelvePm, onePm, twoPm, threePm, fourPm, fivePm];
 
 // Getting local storage or setting to empty
-var events9 = JSON.parse(localStorage.getItem('nineAm')) || "";
-var events10 = JSON.parse(localStorage.getItem('tenAm')) || "";
-var events11 = JSON.parse(localStorage.getItem('elevenAm')) || "";
-var events12 = JSON.parse(localStorage.getItem('twelvePm')) || "";
-var events13 = JSON.parse(localStorage.getItem('onePm')) || "";
-var events14 = JSON.parse(localStorage.getItem('twoPm')) || "";
-var events15 = JSON.parse(localStorage.getItem('threePm')) || "";
-var events16 = JSON.parse(localStorage.getItem('fourPm')) || "";
-var events17 = JSON.parse(localStorage.getItem('fivePm')) || "";
+var events9 = JSON.parse(localStorage.getItem('events' + 9)) || "";
+var events10 = JSON.parse(localStorage.getItem('events' + 10)) || "";
+var events11 = JSON.parse(localStorage.getItem('events' + 11)) || "";
+var events12 = JSON.parse(localStorage.getItem('events' + 12)) || "";
+var events13 = JSON.parse(localStorage.getItem('events' + 13)) || "";
+var events14 = JSON.parse(localStorage.getItem('events' + 14)) || "";
+var events15 = JSON.parse(localStorage.getItem('events' + 15)) || "";
+var events16 = JSON.parse(localStorage.getItem('events' + 16)) || "";
+var events17 = JSON.parse(localStorage.getItem('events' + 17)) || "";
 
 
 
@@ -45,14 +45,14 @@ $.each(hours, function(index, value) {
     // create div to hold the time with span that holds the hour and AM/PM
     var timeCol = $('<div>').addClass('hour col-1 text-right pt-3 pr-1').append('<span>' + value.format('hA') + '</span>');
     // create text area for event column
-    // include event item from local storage if there
-    var textArea = $('<textarea>' + events[index] + '</textarea>').addClass('col-12');
+    // include event item from local storage if there, add id of eventblock and number (hour)
+    var textArea = $('<textarea>' + events[index] + '</textarea>').attr('id', 'eventblock' + (index + 9)).addClass('col-12');
     // create div for event input
     // add timeblock id for reference
     var eventCol = $('<div>').attr('id', (index + 9)).addClass('col-10 timeblock')
     .css({'display':'flex', 'padding-right':'0px', 'padding-left':'0px'}).append(textArea);
-    // create div for save button
-    var saveBtn = $('<button>').addClass('saveBtn col-1').append('<i class="fas fa-save"></i>');
+    // create div for save button, add id of save and number (hour)
+    var saveBtn = $('<button>').attr('id', 'save' + (index + 9)).addClass('saveBtn col-1').append('<i class="fas fa-save"></i>');
 
     // add all columns to row
     $(row).append(timeCol).append(eventCol).append(saveBtn);
@@ -92,4 +92,17 @@ Array.from(timeblocks).forEach(div => {
             
           } 
     }
+});
+
+
+// functionality to save the event inputted to local storage when saveBtn pressed
+$(document).on('click', '.saveBtn', function() {
+    // Get the hour from the buttons id
+    var hour = this.id.substring(4);
+    // Get the value of the textarea for that hour
+    var event = $('#eventblock' + hour).val();
+    // update textarea with current input after user clicks save button
+    $('#eventblock' + hour).val(event);
+    // save the event to localStorage
+    localStorage.setItem('events' + hour, JSON.stringify(event)); 
 });
