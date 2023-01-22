@@ -36,7 +36,7 @@ var events17 = JSON.parse(localStorage.getItem('events' + 17)) || "";
 
 // Displaying all timeblocks
 // for each hour in hours array
-$.each(hours, function(index, value) {
+$.each(hours, function (index, value) {
     // set events array to store all event items
     events = [events9, events10, events11, events12, events13, events14, events15, events16, events17];
 
@@ -50,7 +50,7 @@ $.each(hours, function(index, value) {
     // create div for event input
     // add timeblock id for reference
     var eventCol = $('<div>').attr('id', (index + 9)).addClass('col-10 timeblock')
-    .css({'display':'flex', 'padding-right':'0px', 'padding-left':'0px'}).append(textArea);
+        .css({ 'display': 'flex', 'padding-right': '0px', 'padding-left': '0px' }).append(textArea);
     // create div for save button, add id of save and number (hour)
     var saveBtn = $('<button>').attr('id', 'save' + (index + 9)).addClass('saveBtn col-1').append('<i class="fas fa-save"></i>');
 
@@ -87,22 +87,41 @@ Array.from(timeblocks).forEach(div => {
         } else if ((currentHour > blockHour)) {
             $(div).addClass('past');
             // add class 'future' to current div if current hour is less than blockHour
-          } else if ((currentHour < blockHour)) {
+        } else if ((currentHour < blockHour)) {
             $(div).addClass('future');
-            
-          } 
+
+        }
     }
 });
 
 
 // functionality to save the event inputted to local storage when saveBtn pressed
-$(document).on('click', '.saveBtn', function() {
-    // Get the hour from the buttons id
-    var hour = this.id.substring(4);
-    // Get the value of the textarea for that hour
-    var event = $('#eventblock' + hour).val();
-    // update textarea with current input after user clicks save button
-    $('#eventblock' + hour).val(event);
-    // save the event to localStorage
-    localStorage.setItem('events' + hour, JSON.stringify(event)); 
+$(document).on('click', '.saveBtn', function () {
+    // get the textarea associated with the button
+    var textArea = $(this).prev().children();
+    // check if textarea is empty
+    if (textArea.val().trim() === "") {
+        //show alert
+        $('.container').prepend('<div class="alert alert-danger" role="alert">You have not entered an event</div>');
+        setTimeout(function () {
+            $('.alert').remove();
+        }, 2000);
+    } else {
+        // Get the hour from the buttons id
+        var hour = this.id.substring(4);
+        // Get the value of the textarea for that hour
+        var event = $('#eventblock' + hour).val();
+        // update textarea with current input after user clicks save button
+        $('#eventblock' + hour).val(event);
+        // save the event to localStorage
+        localStorage.setItem('events' + hour, JSON.stringify(event));
+
+        // add alert to say appointment added
+        $('.container').prepend('<div class="alert alert-success" role="alert">Appointment added to localStorage <i class="fas fa-check"></i></div>');
+        // remove alert after 2s
+        setTimeout(function () {
+            $('.alert').remove();
+        }, 2000);
+    }
 });
+
