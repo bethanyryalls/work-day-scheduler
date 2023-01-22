@@ -125,3 +125,19 @@ $(document).on('click', '.saveBtn', function () {
     }
 });
 
+
+// Adding clear events button
+
+// creating button element and adding bootstrap classes for styling
+var clearBtn = $('<button>').text('Clear Events').addClass('clearBtn btn btn-secondary d-block mx-auto my-4');
+
+// Append clearBtn to .container div
+$('.container').append(clearBtn);
+
+// Add click event listener to button
+$('.clearBtn').on('click', function() {
+    //clear input fields
+    $('textarea').val('');
+    // Clear local storage
+    localStorage.clear();
+})
